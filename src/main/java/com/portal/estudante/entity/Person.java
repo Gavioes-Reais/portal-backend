@@ -17,18 +17,21 @@ public class Person {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
 
-    @Column
+    @Column(nullable = false)
     public String name;
 
-    @Column
+    @Column(nullable = false)
     public String CPF;
 
-    @Column
+    @Column(nullable = false)
     public String password;
 
-    @Column(name = "birth_date")
+    @Column(name = "birth_date", nullable = false)
     public Date birthDate;
 
     @Column
+    public String email;
+
+    @Column(nullable = false)
     public Role role;
 }

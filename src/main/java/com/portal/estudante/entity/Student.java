@@ -13,7 +13,7 @@ public class Student {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
 
-    @Column(name = "student_identifier")
+    @Column(name = "student_identifier", nullable = false)
     public String studentIdentifier;
 
     @OneToOne

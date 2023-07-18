@@ -12,7 +12,7 @@ public class Teacher {
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         public Long id;
 
-        @Column(name = "teacher_identifier")
+        @Column(name = "teacher_identifier", nullable = false)
         public String teacherIdentifier;
 
         @OneToOne
