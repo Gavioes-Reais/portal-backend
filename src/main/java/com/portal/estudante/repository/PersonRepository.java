@@ -8,5 +8,7 @@ import java.util.Optional;
 
 @Repository
 public interface PersonRepository extends JpaRepository<Person, Long> {
+
+    Optional<Person> findByCPF(String cpf);
     Optional<Person> findByCPFAndPassword(String cpf, String password);
 }
