@@ -34,4 +34,25 @@ public class Person {
 
     @Column(nullable = false)
     public Role role;
+
+    @Column(nullable = false)
+    String cep;
+
+    @Column(nullable = false)
+    String city;
+
+    @Column(nullable = false)
+    String uf;
+
+    @Column(nullable = false)
+    String street;
+
+    @Column(nullable = false)
+    String district;
+
+    @Column(nullable = false)
+    String number;
+
+    @Column(nullable = false)
+    String complement;
 }
