@@ -33,9 +33,6 @@ public class Person {
     public String email;
 
     @Column(nullable = false)
-    public Role role;
-
-    @Column(nullable = false)
     String cep;
 
     @Column(nullable = false)
