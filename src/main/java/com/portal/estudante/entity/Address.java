@@ -2,36 +2,36 @@ package com.portal.estudante.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Date;
-
-@Entity(name = "person")
 @Data
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class Person {
+public class Address {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
 
     @Column(nullable = false)
-    public String name;
+     public String cep;
 
     @Column(nullable = false)
-    public String CPF;
+    public String street;
 
     @Column(nullable = false)
-    public String password;
+    public String district;
 
-    @Column(name = "birth_date", nullable = false)
-    public Date birthDate;
+    @Column(nullable = false)
+    public String number;
 
-    @Column
-    public String email;
+    @Column(nullable = false)
+    public String complement;
 
-    @OneToOne
-    public Address address;
+    @ManyToOne
+    public City city ;
+
 }

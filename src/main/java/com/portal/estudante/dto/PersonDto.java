@@ -1,10 +1,14 @@
 package com.portal.estudante.dto;
 
+import com.portal.estudante.entity.Address;
+import com.portal.estudante.entity.City;
 import com.portal.estudante.entity.Person;
-import com.portal.estudante.utils.Role;
-import java.sql.Date;
+import com.portal.estudante.entity.State;
 
-public record PersonDto(Long id, String name, String CPF, String password, Date birthDate, Role role,
+import java.sql.Date;
+import java.util.Optional;
+
+public record PersonDto(Long id, String name, String CPF, String password, Date birthDate,
                         String email, String cep, String city, String uf, String street, String district,
                         String number, String complement) {
 
@@ -16,14 +20,25 @@ public record PersonDto(Long id, String name, String CPF, String password, Date 
         entity.setEmail(this.email());
         entity.setCPF(this.CPF());
         entity.setBirthDate(this.birthDate());
-        entity.setRole(this.role());
-        entity.setCep(this.cep);
-        entity.setCity(this.city);
-        entity.setUf(this.uf);
-        entity.setStreet(this.street);
-        entity.setDistrict(this.district);
-        entity.setNumber(this.number);
-        entity.setComplement(this.complement);
+
+        Address address = new Address();
+        address.setCep(this.cep);
+        address.setStreet(this.street);
+        address.setDistrict(this.district);
+        address.setNumber(this.number);
+        address.setComplement(this.complement);
+
+        City city = new City();
+        city.setName(this.city);
+
+        State state = new State();
+        state.setShortName(this.uf);
+
+        city.setState(state);
+        address.setCity(city);
+        entity.setAddress(address);
+
         return entity;
     }
+
 }
