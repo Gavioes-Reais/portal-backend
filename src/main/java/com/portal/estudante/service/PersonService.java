@@ -1,7 +1,6 @@
 package com.portal.estudante.service;
 
 import com.portal.estudante.dto.PersonDto;
-import com.portal.estudante.entity.Person;
 import com.portal.estudante.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,7 +12,13 @@ public class PersonService {
     PersonRepository personRepository;
 
     public PersonDto register(PersonDto personDto) throws Exception {
-        Person entity = personDto.toEntity();
+
+        validatePerson(personDto);
+        personRepository.save(personDto.toEntity());
+        return personDto;
+    }
+
+    public void validatePerson(PersonDto personDto) throws Exception{
 
         if(personDto.name() == null)
             throw new Exception("Campo 'name' é obrigatório");
@@ -25,7 +30,7 @@ public class PersonService {
             throw new Exception("Campo 'email' é obrigatório");
 
         if(personDto.CPF() == null)
-            throw new Exception("Campo 'cpf' é obrigatório");
+            throw new Exception("Campo 'CPF' é obrigatório");
 
         if(personDto.birthDate() == null)
             throw new Exception("Campo 'birthdate' é obrigatório");
@@ -51,8 +56,11 @@ public class PersonService {
         if(personDto.complement() == null)
             throw new Exception("Campo 'complement' é obrigatório");
 
-        personRepository.save(personDto.toEntity());
-        return personDto;
+        if(personRepository.findByEmail(personDto.email()).isPresent())
+            throw new Exception("Este email já foi cadastrado");
+
+        if(personRepository.findByCPF(personDto.CPF()).isPresent())
+            throw new Exception("Este CPF já foi cadastrado");
     }
 
 }

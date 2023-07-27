@@ -2,13 +2,15 @@ package com.portal.estudante.dto;
 
 import com.portal.estudante.entity.Address;
 import com.portal.estudante.entity.City;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.portal.estudante.entity.Person;
 import com.portal.estudante.entity.State;
 
 import java.sql.Date;
 import java.util.Optional;
 
-public record PersonDto(Long id, String name, String CPF, String password, Date birthDate,
+
+public record PersonDto(Long id, String name, String CPF, String password, @JsonFormat(pattern = "dd-MM-yyyy") Date birthDate,
                         String email, String cep, String city, String uf, String street, String district,
                         String number, String complement) {
 
