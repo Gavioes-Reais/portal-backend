@@ -33,5 +33,23 @@ public class Person {
     public String email;
 
     @Column(nullable = false)
-    public Role role;
+    String cep;
+
+    @Column(nullable = false)
+    String city;
+
+    @Column(nullable = false)
+    String uf;
+
+    @Column(nullable = false)
+    String street;
+
+    @Column(nullable = false)
+    String district;
+
+    @Column(nullable = false)
+    String number;
+
+    @Column(nullable = false)
+    String complement;
 }
