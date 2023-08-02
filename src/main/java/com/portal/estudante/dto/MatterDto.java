@@ -11,5 +11,10 @@ public record MatterDto(Long id, String name, String series, String img_url) {
         matter.setImg_url(this.img_url());
         return matter;
     }
+
+    public Long getId() {
+		return id;
+	}
+
 }
 

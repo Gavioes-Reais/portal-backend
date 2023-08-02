@@ -1,5 +1,7 @@
 package com.portal.estudante.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +26,11 @@ public class MatterService {
         if(matterDto.img_url() == null)
             throw new Exception("Campo 'image-url' é obrigatório");
 
+    }
+
+    public MatterDto findById(Long id) {
+		Optional<Matter> obj = repository.findById(id);
+		return obj.orElseThrow().convertDTO();
     }
 
     public MatterDto create(MatterDto matterDTO) {
