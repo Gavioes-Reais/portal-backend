@@ -56,6 +56,10 @@ public class MatterService {
                 .orElse(null);
     }
 
+    public void deleteMatter(Long id) {
+        repository.deleteById(id);
+    }
+
     private Matter convertToEntity(MatterDto matterDTO) {
         Matter matter = new Matter();
         matter.setName(matterDTO.name());
