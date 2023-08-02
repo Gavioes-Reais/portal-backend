@@ -1,5 +1,7 @@
 package com.portal.estudante.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,8 +36,18 @@ public class MatterController {
     @GetMapping("/{id}")
     public ResponseEntity<MatterDto> getById(@PathVariable Long id){
         try{
-            MatterDto matter = matterService.findById(id);
+            MatterDto matter = matterService.getById(id);
             return ResponseEntity.status(HttpStatus.OK).body(matter);
+        } catch( Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }   
+    }
+
+    @GetMapping("/")
+    public ResponseEntity<List<MatterDto>> get(){
+        try{
+            List<MatterDto> matterList = matterService.getAllMatters();
+            return ResponseEntity.status(HttpStatus.OK).body(matterList);
         } catch( Exception e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }   

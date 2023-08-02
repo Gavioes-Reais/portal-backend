@@ -1,6 +1,8 @@
 package com.portal.estudante.service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,15 +30,20 @@ public class MatterService {
 
     }
 
-    public MatterDto findById(Long id) {
-		Optional<Matter> obj = repository.findById(id);
-		return obj.orElseThrow().convertDTO();
-    }
-
     public MatterDto create(MatterDto matterDTO) {
         Matter matter = convertToEntity(matterDTO);
         Matter savedMatter = repository.save(matter);
         return savedMatter.convertDTO();
+    }
+
+    public MatterDto getById(Long id) {
+		Optional<Matter> obj = repository.findById(id);
+		return obj.orElseThrow().convertDTO();
+    }
+
+     public List<MatterDto> getAllMatters() {
+        List<Matter> allMatters = repository.findAll();
+        return allMatters.stream().map(this::convertToDto).collect(Collectors.toList());
     }
 
     private Matter convertToEntity(MatterDto matterDTO) {
@@ -45,6 +52,15 @@ public class MatterService {
         matter.setSeries(matterDTO.series());
         matter.setImg_url(matterDTO.img_url());
         return matter;
+    }
+
+    private MatterDto convertToDto(Matter matter) {
+        return new MatterDto(
+            matter.getId(),
+            matter.getName(),
+            matter.getSeries(),
+            matter.getImg_url()
+        );
     }
     
 }
