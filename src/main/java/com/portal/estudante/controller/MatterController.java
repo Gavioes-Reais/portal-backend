@@ -32,7 +32,7 @@ public class MatterController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<MatterDto> update(@PathVariable Long id){
+    public ResponseEntity<MatterDto> getById(@PathVariable Long id){
         try{
             MatterDto matter = matterService.findById(id);
             return ResponseEntity.status(HttpStatus.OK).body(matter);
