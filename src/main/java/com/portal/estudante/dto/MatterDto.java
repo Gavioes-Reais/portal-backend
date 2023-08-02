@@ -16,5 +16,9 @@ public record MatterDto(Long id, String name, String series, String img_url) {
 		return id;
 	}
 
+    public Object getPercentage_completed() {
+        return null;
+    }
+
 }
 

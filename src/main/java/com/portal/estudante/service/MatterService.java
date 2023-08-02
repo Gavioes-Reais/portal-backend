@@ -41,9 +41,19 @@ public class MatterService {
 		return obj.orElseThrow().convertDTO();
     }
 
-     public List<MatterDto> getAllMatters() {
+    public List<MatterDto> getAllMatters() {
         List<Matter> allMatters = repository.findAll();
         return allMatters.stream().map(this::convertToDto).collect(Collectors.toList());
+    }
+
+    public MatterDto updateMatter(MatterDto updatedMatterDto) {
+        return repository.findById(updatedMatterDto.id())
+                .map(existingMatter -> {
+                    updateEntity(existingMatter, updatedMatterDto);
+                    Matter savedMatter = repository.saveAndFlush(existingMatter);
+                    return convertToDto(savedMatter);
+                })
+                .orElse(null);
     }
 
     private Matter convertToEntity(MatterDto matterDTO) {
@@ -61,6 +71,12 @@ public class MatterService {
             matter.getSeries(),
             matter.getImg_url()
         );
+    }
+
+    private void updateEntity(Matter existingMatter, MatterDto updatedMatterDto) {
+        existingMatter.setName(updatedMatterDto.name());
+        existingMatter.setSeries(updatedMatterDto.series());
+        existingMatter.setImg_url(updatedMatterDto.img_url());
     }
     
 }
