@@ -1,6 +1,9 @@
 package com.portal.estudante.service;
 
+import com.portal.estudante.dto.AddressDto;
 import com.portal.estudante.dto.PersonDto;
+import com.portal.estudante.entity.Address;
+import com.portal.estudante.entity.Person;
 import com.portal.estudante.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,10 +14,17 @@ public class PersonService {
     @Autowired
     PersonRepository personRepository;
 
+    @Autowired
+    AddressService addressService;
+
     public PersonDto register(PersonDto personDto) throws Exception {
 
         validatePerson(personDto);
-        personRepository.save(personDto.toEntity());
+
+        Person person = personDto.toEntity();
+        person.setAddress(setPersonAddress(personDto));
+        personRepository.save(person);
+
         return personDto;
     }
 
@@ -38,11 +48,11 @@ public class PersonService {
         if(personDto.cep() == null)
             throw new Exception("Campo 'cep' é obrigatório");
 
-        if(personDto.city() == null)
-            throw new Exception("Campo 'city' é obrigatório");
+        if(personDto.cityName() == null)
+            throw new Exception("Campo 'cityName' é obrigatório");
 
-        if(personDto.uf() == null)
-            throw new Exception("Campo 'uf' é obrigatório");
+        if(personDto.ufShortName() == null)
+            throw new Exception("Campo 'ufShortName' é obrigatório");
 
         if(personDto.street() == null)
             throw new Exception("Campo 'street' é obrigatório");
@@ -61,6 +71,11 @@ public class PersonService {
 
         if(personRepository.findByCPF(personDto.CPF()).isPresent())
             throw new Exception("Este CPF já foi cadastrado");
+    }
+
+    public Address setPersonAddress(PersonDto personDto) throws Exception{
+
+        return(addressService.createAddress(personDto));
     }
 
 }
