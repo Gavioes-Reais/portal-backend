@@ -1,6 +1,6 @@
 package com.portal.estudante.entity;
 
-import com.portal.estudante.utils.Role;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,6 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Person implements UserDetails {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
@@ -37,8 +38,8 @@ public class Person implements UserDetails {
     @Column
     public String email;
 
-    @Column(nullable = false)
-    public Role role;
+    @OneToOne
+    public Address address;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

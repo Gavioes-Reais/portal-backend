@@ -5,12 +5,10 @@ import com.portal.estudante.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+
 @RequestMapping(value = "/register")
 public class CadastroController {
 
@@ -18,12 +16,13 @@ public class CadastroController {
     PersonService personService;
 
     @PostMapping
-    public ResponseEntity<PersonDto> save(@RequestBody PersonDto personDto){
+    public ResponseEntity register(@RequestBody PersonDto personDto) {
         try {
-            return new ResponseEntity(personService.create(personDto), HttpStatus.CREATED);
+            return new ResponseEntity<>(personService.register(personDto), HttpStatus.CREATED);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body(e.getMessage());
         }
     }
-
 }
