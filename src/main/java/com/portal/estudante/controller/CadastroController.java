@@ -8,7 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value = "/registro")
+
+@RequestMapping(value = "/register")
 public class CadastroController {
 
     @Autowired
