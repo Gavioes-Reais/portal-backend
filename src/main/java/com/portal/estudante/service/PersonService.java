@@ -6,6 +6,7 @@ import com.portal.estudante.entity.Address;
 import com.portal.estudante.entity.Person;
 import com.portal.estudante.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,11 +18,15 @@ public class PersonService {
     @Autowired
     AddressService addressService;
 
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
     public PersonDto register(PersonDto personDto) throws Exception {
 
         validatePerson(personDto);
 
         Person person = personDto.toEntity();
+        person.setPassword(passwordEncoder.encode(personDto.password()));
         person.setAddress(setPersonAddress(personDto));
         personRepository.save(person);
 
