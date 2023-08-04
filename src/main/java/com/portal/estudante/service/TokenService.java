@@ -19,6 +19,6 @@ public class TokenService {
                 .withExpiresAt(Date.from(LocalDateTime.now()
                         .plusMinutes(15)
                         .toInstant(ZoneOffset.of("-03:00")))
-                ).sign(Algorithm.HMAC256("Atumalaka"));
+                ).sign(Algorithm.HMAC256("dobradiça"));
     }
 }

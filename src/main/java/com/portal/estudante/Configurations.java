@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -19,15 +20,15 @@ public class Configurations {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-        http
-            .csrf(AbstractHttpConfigurer::disable)
-            .authorizeHttpRequests((authorize) -> authorize
-                 .requestMatchers(HttpMethod.GET, "/login")
-                 .permitAll()
-                 .requestMatchers(HttpMethod.POST, "/register")
-                 .permitAll()
-                 .anyRequest().authenticated());
-        return http.build();
+       http
+               .csrf(AbstractHttpConfigurer::disable)
+               .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+               .authorizeHttpRequests(requests -> requests
+                       .requestMatchers("/register").permitAll()
+                       .requestMatchers("/login").permitAll()
+                       .anyRequest().authenticated());
+
+       return http.build();
     }
 
     @Bean
