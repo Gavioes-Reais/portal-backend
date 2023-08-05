@@ -32,6 +32,6 @@ public class Address {
     public String complement;
 
     @ManyToOne
-    public City city ;
+    public City city;
 
 }

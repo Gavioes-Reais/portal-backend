@@ -5,13 +5,16 @@ import com.portal.estudante.entity.Person;
 import com.portal.estudante.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
 
 @Service
-public class LoginService {
+public class LoginService implements UserDetailsService {
     @Autowired
     PersonRepository personRepository;
     public String verifyLogin(LoginDto loginDto) {
@@ -24,5 +27,10 @@ public class LoginService {
         } catch (ResponseStatusException exception){
             throw new ResponseStatusException(exception.getStatusCode(), exception.getReason());
         }
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return personRepository.findByCPF(username).get();
     }
 }

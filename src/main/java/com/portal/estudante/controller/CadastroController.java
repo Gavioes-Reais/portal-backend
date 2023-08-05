@@ -14,12 +14,14 @@ public class CadastroController {
     @Autowired
     PersonService personService;
 
-    @PostMapping("")
-    public ResponseEntity<PersonDto> register(@RequestBody PersonDto personDto) {
+    @PostMapping
+    public ResponseEntity register(@RequestBody PersonDto personDto) {
         try {
             return new ResponseEntity<>(personService.register(personDto), HttpStatus.CREATED);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body(e.getMessage());
         }
     }
 }
